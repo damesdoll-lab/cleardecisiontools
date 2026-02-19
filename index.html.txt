@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clear Decision Tools</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 60px;
+      background: #f7f7f7;
+    }
+    h1 {
+      color: #222;
+    }
+    p {
+      color: #555;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Clear Decision Tools</h1>
+<p>Smart tools to help you make clearer decisions.</p>
+<p>First calculator coming soon.</p>
+
+</body>
+</html>
