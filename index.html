@@ -1,29 +1,221 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <title>Clear Decision Tools</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Clear Decision Tools — Time Reality Check</title>
+  <meta name="description" content="A simple, fast time reality calculator that shows how much true free time you have each week." />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 60px;
-      background: #f7f7f7;
-    }
-    h1 {
-      color: #222;
-    }
-    p {
-      color: #555;
-      font-size: 18px;
-    }
+    :root { --bg:#f6f6f4; --text:#111; --muted:#6b6b6b; --card:#ffffff; --line:#e7e7e2; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 48px 18px; }
+    h1 { font-size: 44px; letter-spacing: -0.02em; margin: 0 0 8px; }
+    p.lede { color:var(--muted); margin: 0 0 24px; font-size: 18px; line-height: 1.4; }
+    .grid { display:grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 900px){ .grid { grid-template-columns: 1.05fr 0.95fr; } }
+    .card { background:var(--card); border:1px solid var(--line); border-radius: 14px; padding: 18px; }
+    .row { display:flex; gap: 12px; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .row:last-child { border-bottom: 0; }
+    label { font-weight: 600; }
+    .hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    input[type="number"] { width: 110px; padding: 10px 10px; border-radius: 10px; border: 1px solid var(--line); font-size: 16px; }
+    .btns { display:flex; gap: 10px; margin-top: 14px; }
+    button { border: 1px solid var(--line); background: #111; color:#fff; padding: 10px 12px; border-radius: 10px; cursor: pointer; font-weight: 700; }
+    button.secondary { background:#fff; color:#111; }
+    .result h2 { margin: 0 0 10px; font-size: 22px; }
+    .big { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; margin: 6px 0; }
+    .sub { color: var(--muted); margin: 0 0 12px; line-height: 1.5; }
+    .pill { display:inline-block; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line); background:#fff; font-size: 12px; color: var(--muted); }
+    footer { margin-top: 26px; color: var(--muted); font-size: 12px; }
+    a { color: inherit; }
   </style>
 </head>
+
 <body>
+  <div class="wrap">
+    <div class="pill">Tool #1 • Time Reality Check</div>
+    <h1>Clear Decision Tools</h1>
+    <p class="lede">Find your <b>true</b> free time per week. Fast. Private. No sign-up.</p>
 
-<h1>Clear Decision Tools</h1>
-<p>Smart tools to help you make clearer decisions.</p>
-<p>First calculator coming soon.</p>
+    <div class="grid">
+      <!-- INPUTS -->
+      <div class="card">
+        <h2 style="margin:0 0 10px;">Enter your averages</h2>
+        <p class="sub" style="margin-top:0;">Use realistic numbers — this is a reality check, not a fantasy plan.</p>
 
+        <div class="row">
+          <div>
+            <label for="sleep">Sleep</label>
+            <div class="hint">hours/day</div>
+          </div>
+          <input id="sleep" type="number" min="0" max="24" step="0.5" value="7.5">
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="work">Work / School</label>
+            <div class="hint">hours/day</div>
+          </div>
+          <input id="work" type="number" min="0" max="24" step="0.5" value="8">
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="commute">Commute / Errands driving</label>
+            <div class="hint">hours/day</div>
+          </div>
+          <input id="commute" type="number" min="0" max="24" step="0.25" value="1">
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="care">Family / Care / Household</label>
+            <div class="hint">hours/day</div>
+          </div>
+          <input id="care" type="number" min="0" max="24" step="0.25" value="3">
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="screen">Phone / TV / Scroll</label>
+            <div class="hint">hours/day</div>
+          </div>
+          <input id="screen" type="number" min="0" max="24" step="0.25" value="2">
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="admin">Life admin (email, scheduling, bills)</label>
+            <div class="hint">hours/day</div>
+          </div>
+          <input id="admin" type="number" min="0" max="24" step="0.25" value="0.5">
+        </div>
+
+        <div class="btns">
+          <button id="calcBtn">Calculate</button>
+          <button class="secondary" id="resetBtn" type="button">Reset</button>
+        </div>
+
+        <footer>
+          Tip: If your life varies, use a 7-day average. This tool stores nothing.
+        </footer>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="card result">
+        <h2>Your reality check</h2>
+        <p class="sub">This is what’s left <b>after</b> your real-life commitments.</p>
+
+        <div id="statusPill" class="pill">Waiting for your numbers</div>
+
+        <div class="big" id="freeHours">—</div>
+        <p class="sub" id="explain">Enter your averages and press Calculate.</p>
+
+        <div class="card" style="padding:14px; margin-top:14px; border-radius: 12px;">
+          <div style="display:flex; justify-content:space-between; gap:10px;">
+            <div>
+              <div class="hint">True free time / day</div>
+              <div style="font-weight:800; font-size:18px;" id="freePerDay">—</div>
+            </div>
+            <div>
+              <div class="hint">True free time / week</div>
+              <div style="font-weight:800; font-size:18px;" id="freePerWeekSmall">—</div>
+            </div>
+            <div>
+              <div class="hint">True free time / year</div>
+              <div style="font-weight:800; font-size:18px;" id="freePerYear">—</div>
+            </div>
+          </div>
+        </div>
+
+        <footer style="margin-top:18px;">
+          Next: we’ll add a one-click “Scenario toggle” (weekday vs weekend) without making it complicated.
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function clamp(n, min, max) {
+      return Math.min(Math.max(n, min), max);
+    }
+
+    function getNum(id) {
+      const v = parseFloat(document.getElementById(id).value);
+      return isNaN(v) ? 0 : v;
+    }
+
+    function round1(n) { return Math.round(n * 10) / 10; }
+
+    function calc() {
+      const sleep = getNum("sleep");
+      const work = getNum("work");
+      const commute = getNum("commute");
+      const care = getNum("care");
+      const screen = getNum("screen");
+      const admin = getNum("admin");
+
+      const totalUsed = sleep + work + commute + care + screen + admin;
+      const freePerDayRaw = 24 - totalUsed;
+      const freePerDay = round1(freePerDayRaw);
+      const freePerWeek = round1(freePerDayRaw * 7);
+      const freePerYear = Math.round(freePerDayRaw * 365);
+
+      const freeHoursEl = document.getElementById("freeHours");
+      const explainEl = document.getElementById("explain");
+      const pillEl = document.getElementById("statusPill");
+
+      document.getElementById("freePerDay").textContent = `${round1(freePerDayRaw)} hrs`;
+      document.getElementById("freePerWeekSmall").textContent = `${round1(freePerDayRaw * 7)} hrs`;
+      document.getElementById("freePerYear").textContent = `${freePerYear} hrs`;
+
+      if (totalUsed > 24) {
+        freeHoursEl.textContent = "Overbooked";
+        pillEl.textContent = "You’re in a deficit";
+        explainEl.textContent = "Your inputs add up to more than 24 hours/day. That usually means you’re multitasking, exhausted, or double-counting. Reduce one category until the day fits.";
+        return;
+      }
+
+      freeHoursEl.textContent = `${freePerWeek} hrs/week`;
+
+      // Simple “status” bands (not medical, just practical)
+      if (freePerWeek < 7) {
+        pillEl.textContent = "Low bandwidth";
+        explainEl.textContent = "You have less than 1 hour/day of true free time. Any new goal needs subtraction first (sleep, screen, admin, or commitments).";
+      } else if (freePerWeek < 14) {
+        pillEl.textContent = "Tight but workable";
+        explainEl.textContent = "You’ve got 1–2 hours/day. You can build progress with small blocks (30–60 min), but distractions will erase it fast.";
+      } else if (freePerWeek < 28) {
+        pillEl.textContent = "Strong capacity";
+        explainEl.textContent = "You have 2–4 hours/day. This is enough to run a serious project with consistency.";
+      } else {
+        pillEl.textContent = "High capacity";
+        explainEl.textContent = "You have 4+ hours/day. You can move fast — but only if you protect those hours from drift.";
+      }
+    }
+
+    function resetDefaults() {
+      document.getElementById("sleep").value = 7.5;
+      document.getElementById("work").value = 8;
+      document.getElementById("commute").value = 1;
+      document.getElementById("care").value = 3;
+      document.getElementById("screen").value = 2;
+      document.getElementById("admin").value = 0.5;
+
+      document.getElementById("statusPill").textContent = "Waiting for your numbers";
+      document.getElementById("freeHours").textContent = "—";
+      document.getElementById("explain").textContent = "Enter your averages and press Calculate.";
+      document.getElementById("freePerDay").textContent = "—";
+      document.getElementById("freePerWeekSmall").textContent = "—";
+      document.getElementById("freePerYear").textContent = "—";
+    }
+
+    document.getElementById("calcBtn").addEventListener("click", calc);
+    document.getElementById("resetBtn").addEventListener("click", resetDefaults);
+
+    // Optional: auto-calc on first load so it looks “alive”
+    calc();
+  </script>
 </body>
 </html>
+
