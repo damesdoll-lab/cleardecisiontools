@@ -35,6 +35,19 @@
   <div class="wrap">
     <div class="pill">Tool #1 • Time Reality Check</div>
     <h1>Clear Decision Tools</h1>
+    <div style="margin:20px 0; text-align:center;">
+  <button id="modeObligation"
+    style="padding:10px 18px; margin-right:8px; border-radius:8px;
+    border:1px solid #ccc; background:#111; color:#fff; cursor:pointer;">
+    Obligation Mode
+  </button>
+
+  <button id="modeCreation"
+    style="padding:10px 18px; border-radius:8px;
+    border:1px solid #ccc; background:#f5f5f5; color:#111; cursor:pointer;">
+    Creation Mode
+  </button>
+</div>
     <p class="lede">Find your <b>true</b> free time per week. Fast. Private. No sign-up.</p>
 
     <div class="grid">
@@ -215,6 +228,35 @@
 
     // Optional: auto-calc on first load so it looks “alive”
     calc();
+    // --- MODE TOGGLE ---
+
+function setObligationMode() {
+  document.getElementById("sleep").value = 7.5;
+  document.getElementById("work").value = 8;
+  document.getElementById("commute").value = 1;
+  document.getElementById("family").value = 3;
+  document.getElementById("screen").value = 2;
+  document.getElementById("admin").value = 0.5;
+
+  calc();
+}
+
+function setCreationMode() {
+  document.getElementById("sleep").value = 7;
+  document.getElementById("work").value = 8;
+  document.getElementById("commute").value = 0.5;
+  document.getElementById("family").value = 2.5;
+  document.getElementById("screen").value = 1;
+  document.getElementById("admin").value = 0.5;
+
+  calc();
+}
+
+document.getElementById("modeObligation")
+  .addEventListener("click", setObligationMode);
+
+document.getElementById("modeCreation")
+  .addEventListener("click", setCreationMode);
   </script>
   
   <div style="margin-top:40px; text-align:center; font-size:14px; color:#666;">
@@ -225,5 +267,6 @@
   
 </body>
 </html>
+
 
 
