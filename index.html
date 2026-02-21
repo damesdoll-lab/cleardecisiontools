@@ -27,7 +27,12 @@
     .sub { color: var(--muted); margin: 0 0 12px; line-height: 1.5; }
     .pill { display:inline-block; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line); background:#fff; font-size: 12px; color: var(--muted); }
     footer { margin-top: 26px; color: var(--muted); font-size: 12px; }
-    a { color: inherit; }
+    a { color: inherit; }/* Mode toggle active highlight */
+.modeBtn.active {
+  background: #111 !important;
+  color: #fff !important;
+  border-color: #111 !important;
+}
   </style>
 </head>
 
@@ -45,7 +50,7 @@
   <button id="modeCreation"
     style="padding:10px 18px; border-radius:8px;
     border:1px solid #ccc; background:#f5f5f5; color:#111; cursor:pointer;">
-    Creation Mode
+    Focus Mode
   </button>
 </div>
     <p class="lede">Find your <b>true</b> free time per week. Fast. Private. No sign-up.</p>
@@ -252,11 +257,24 @@ function setCreationMode() {
   calc();
 }
 
-document.getElementById("modeObligation")
-  .addEventListener("click", setObligationMode);
+const btnOb = document.getElementById("modeObligation");
+const btnFo = document.getElementById("modeCreation"); // This button now says "Focus Mode"
 
-document.getElementById("modeCreation")
-  .addEventListener("click", setCreationMode);
+function setActiveButton(active) {
+  btnOb.classList.remove("active");
+  btnFo.classList.remove("active");
+  active.classList.add("active");
+}
+
+btnOb.addEventListener("click", () => {
+  setActiveButton(btnOb);
+  setObligationMode(); // keeps your current preset + calc
+});
+
+btnFo.addEventListener("click", () => {
+  setActiveButton(btnFo);
+  setCreationMode(); // keeps your current preset + calc (math engine unchanged)
+});
   </script>
   
   <div style="margin-top:40px; text-align:center; font-size:14px; color:#666;">
@@ -267,6 +285,7 @@ document.getElementById("modeCreation")
   
 </body>
 </html>
+
 
 
 
